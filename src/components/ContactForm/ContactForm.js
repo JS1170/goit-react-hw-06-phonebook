@@ -3,24 +3,25 @@ import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import scss from './contactForm.module.scss';
 
-export default function ContactForm({submitForm}) {
+export default function ContactForm({ submitForm }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const onInputChange = event => {
-    const { name, value } = event.target;
-    setName(value);
-    setNumber(value);
-  };
+  // const onInputChange = event => {
+  // const { name, value } = event.target;
+  //   setName(name);
+  //   setNumber(event.currentTarget.value);
+  // };
 
   const onSubmitChange = event => {
     event.preventDefault();
     const newContact = { id: nanoid(), name, number };
-  submitForm(newContact);
-  reset();
+    submitForm(newContact);
+    reset();
   };
   const reset = () => {
-    setName(''); setNumber('')
+    setName('');
+    setNumber('');
   };
 
   return (
@@ -30,7 +31,7 @@ export default function ContactForm({submitForm}) {
         <input
           className={scss.formInput}
           value={name}
-          onChange={onInputChange}
+          onChange={e => setName(e.target.value)}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -43,7 +44,7 @@ export default function ContactForm({submitForm}) {
         <input
           className={scss.formInput}
           value={number}
-          onChange={onInputChange}
+          onChange={e => setNumber(e.target.value)}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
